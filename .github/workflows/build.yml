@@ -70,7 +70,8 @@ jobs:
           sudo mkdir -p /mnt/tc-efi /mnt/tc-tce
           sudo mount "${LOOP}p1" /mnt/tc-efi
           sudo mount "${LOOP}p2" /mnt/tc-tce
-          sudo cp -a build/root/EFI /mnt/tc-efi/
+          # FAT32 cannot store Unix owner or mode metadata.
+          sudo cp -r --no-preserve=mode,ownership build/root/EFI /mnt/tc-efi/
           sudo mkdir -p /mnt/tc-tce/tce/optional
           sudo umount /mnt/tc-efi /mnt/tc-tce
           sudo losetup -d "$LOOP"
